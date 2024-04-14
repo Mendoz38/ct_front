@@ -13,9 +13,9 @@ function App() {
     <div className="autosur">
       <Header />
       <Routes>
-        <Route exact path="/Home" element={<Home />} />
+        <Route exact path="/" element={<Home />} />
         
-        <Route path="*" element={<Navigate to="/Home" />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />
     </div>
