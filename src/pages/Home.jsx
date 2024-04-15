@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from "react";
-//import moment from 'moment'
-//import { Link } from "react-router-dom";
+import moment from 'moment'
+import { Link } from "react-router-dom";
+import getAllRDV from "../api/ct"
 
 const Home = (props) => {
 
+const [listeRDV, setListeRDV ] = useState([])
+
+    useEffect(()=> {
+        getAllRDV()
+            .then((result) => {
+                console.log("zzz", result)
+                setListeRDV(result)
+            })
+            .catch(err=> console.log(err))
+    }, [props])
 
     return (
         <div className="containeur">
-            <h1> Réservez votre créneau </h1>
+            <h2> Nombre actuel de rendez-vous dans la BDD : {listeRDV.length} </h2>
+
+            <section>
             <div className="containeur_jour">
                 <div className="jour">Lundi 20 mai</div>
                 <div className="bloc_heures">
@@ -84,9 +97,27 @@ const Home = (props) => {
                 </div>
             </div>
 
-
+            </section>
         </div>
     )
 }
 
 export default Home
+
+/*
+            <div className="menu">
+                <Link to="" className="bouton"> Prendre actuel de rendez-vous dans la BDD </Link>
+                <Link className="bouton">Liste des RDV</Link>
+            </div>
+            <section>
+                {listeRDV.map((liste)=>{
+                    return(
+                        <div key={liste._id}>
+                            <div className="date">
+                                <p>{liste.date} - {liste.vehicule.marque} - {liste.client.nom} - {liste.client.prenom}</p>
+                            </div>
+                        </div>
+                    )
+                })}
+            </section>
+*/
