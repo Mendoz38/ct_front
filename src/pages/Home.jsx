@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import moment from 'moment'
 import { Link } from "react-router-dom";
 import getAllRDV from "../api/ct"
+import Calendar from "./Calendar/Calendar";
 
 const Home = (props) => {
 
@@ -17,7 +18,7 @@ const [listeRDV, setListeRDV ] = useState([])
     }, [props])
 
     return (
-        <div className="containeur">
+        <div className="containeur RDV">
             <h2> Nombre actuel de rendez-vous dans la BDD : {listeRDV.length} </h2>
 
             <section>
@@ -32,13 +33,13 @@ const [listeRDV, setListeRDV ] = useState([])
                             <div className="heure">10h</div>
                             <div className="dispo">2 places disponibles</div>
                     </a>
-                    <a href="#" className="creneau">
+                    <a href="#" className="creneau Complet">
                         <div className="heure">12h</div>
-                        <div className="dispo">1 place disponible</div>
+                        <div className="dispo">Complet</div>
                     </a>
                     <a href="#" className="creneau">
                         <div className="heure">14h</div>
-                        <div className="dispo">Complet</div>
+                        <div className="dispo">1 place disponible</div>
                     </a>
                     <a href="#" className="creneau">
                         <div className="heure">16h</div>
@@ -49,22 +50,22 @@ const [listeRDV, setListeRDV ] = useState([])
             <div className="containeur_jour">
                 <div className="jour">Mardi 21 mai</div>
                 <div className="bloc_heures">
-                    <div className="creneau">
+                    <a href="#"  className="creneau">
                         <div className="heure">8h</div>
-                        <div className="dispo">Complet</div>
-                    </div>
-                    <div className="creneau">
-                        <div className="heure">10h</div>
                         <div className="dispo">2 places disponibles</div>
-                    </div>
-                    <div className="creneau">
+                    </a>
+                    <a href="#"  className="creneau Complet">
+                        <div className="heure">10h</div>
+                        <div className="dispo">Complet</div>
+                    </a>
+                    <a href="#"  className="creneau">
                         <div className="heure">12h</div>
                         <div className="dispo">1 place disponible</div>
-                    </div>
-                    <div className="creneau">
+                    </a>
+                    <a href="#"  className="creneau Complet">
                         <div className="heure">14h</div>
                         <div className="dispo">Complet</div>
-                    </div>
+                    </a>
                     <div className="creneau">
                         <div className="heure">16h</div>
                         <div className="dispo">1 place disponible</div>
@@ -74,30 +75,33 @@ const [listeRDV, setListeRDV ] = useState([])
             <div className="containeur_jour">
                 <div className="jour">Mercredi 22 mai</div>
                 <div className="bloc_heures">
-                    <div className="creneau">
+                    <a href="#"  className="creneau">
                         <div className="heure">8h</div>
-                        <div className="dispo">Complet</div>
-                    </div>
-                    <div className="creneau">
-                        <div className="heure">10h</div>
                         <div className="dispo">2 places disponibles</div>
-                    </div>
-                    <div className="creneau">
+                    </a>
+                    <a href="#"  className="creneau Complet">
+                        <div className="heure">10h</div>
+                        <div className="dispo">Complet</div>
+                    </a>
+                    <a href="#"  className="creneau">
                         <div className="heure">12h</div>
                         <div className="dispo">1 place disponible</div>
-                    </div>
-                    <div className="creneau">
+                    </a>
+                    <a href="#"  className="creneau Complet">
                         <div className="heure">14h</div>
                         <div className="dispo">Complet</div>
-                    </div>
-                    <div className="creneau">
+                    </a>
+                    <a href="#"  className="creneau">
                         <div className="heure">16h</div>
                         <div className="dispo">1 place disponible</div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             </section>
+            <hr />
+            <h3>Dates automatiques</h3>
+            <Calendar numDays={7} />
         </div>
     )
 }
@@ -105,6 +109,10 @@ const [listeRDV, setListeRDV ] = useState([])
 export default Home
 
 /*
+
+            <Calendar numDays={7} />
+
+
             <div className="menu">
                 <Link to="" className="bouton"> Prendre actuel de rendez-vous dans la BDD </Link>
                 <Link className="bouton">Liste des RDV</Link>

@@ -7,7 +7,7 @@ const Home = (props) => {
     return (
         <div className="footer">
                 <div>
-                    <p> Bienvenue -  <Link to="/Deposer">Deposer</Link></p>
+                    <p> AutoSur</p>
                 </div>
 
 
