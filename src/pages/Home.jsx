@@ -11,7 +11,7 @@ const [listeRDV, setListeRDV ] = useState([])
     useEffect(()=> {
         getAllRDV()
             .then((result) => {
-                console.log("zzz", result)
+                //console.log("zzz", result)
                 setListeRDV(result)
             })
             .catch(err=> console.log(err))
@@ -66,10 +66,10 @@ const [listeRDV, setListeRDV ] = useState([])
                         <div className="heure">14h</div>
                         <div className="dispo">Complet</div>
                     </a>
-                    <div className="creneau">
+                    <a href="#"  className="creneau">
                         <div className="heure">16h</div>
                         <div className="dispo">1 place disponible</div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div className="containeur_jour">

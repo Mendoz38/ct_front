@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom"
 
 const Calendar = ({ numDays }) => {
   // Fonction pour obtenir la date à partir d'aujourd'hui
@@ -14,7 +15,7 @@ const Calendar = ({ numDays }) => {
   const generateHeures = () => {
     const heures = [];
     for (let i = 8; i < 18; i += 2) {
-      heures.push(`${i}h`);
+      heures.push(`${i}`);
     }
     return heures;
   };
@@ -37,10 +38,10 @@ const Calendar = ({ numDays }) => {
           <div className="jour"> {dateObj.date}</div>
           <div className="bloc_heures">
             {dateObj.heures.map((heure, indexHeure) => (
-              <a href="#" className="creneau" key={indexHeure}>
-                <div className="heure">{heure}</div>
+              <Link to={`Reservation/${dateObj.date}/${heure}`} className="creneau" key={indexHeure}>
+                <div className="heure">{heure}h</div>
                 <div className="dispo">2 places disponibles</div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
