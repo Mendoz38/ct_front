@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import moment from "moment";
 import Input from "./Form/Input";
-import {addRDV} from "../api/ct"
+import { addRDV } from "../api/ct";
 
 const Reservation = (props) => {
   const params = useParams();
 
-  
   const [formData, setFormData] = useState({
-    date: params.date,
+    date: moment().format('YYYY-MM-DD'),
     heure: params.heure,
-    firstname: "",
-    lastname: "",
-    email: "",
-    email: "",
+    prenom: "",
+    nom: "",
+    mail: "",
     telephone: "",
     marque: "",
     modele: "",
     immatriculation: "",
-
   });
 
   const handleInputChange = (e) => {
@@ -31,34 +29,64 @@ const Reservation = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const jsonFormData = JSON.stringify(formData);
-    console.log('Données soumises :', jsonFormData);
-    addRDV(jsonFormData)
+    const RDV = [
+      {
+        date: formData.date,
+        heure: formData.heure,
+        prenom: formData.prenom,
+        nom: formData.nom,
+        mail: formData.mail,
+        telephone: formData.telephone,
+        marque: formData.marque,
+        modele: formData.modele,
+        immatriculation: formData.immatriculation,
+      },
+    ];
+    console.log("Données RDV :", RDV[0]);
+    addRDV(RDV[0]);
   };
 
   return (
     <div>
       <h1>
-        Votre réservation pour le {params.date} à {params.heure}h | <Link to="/" className="bouton">Changer de date</Link>
+        Votre réservation pour le {params.date} à {params.heure}h |{" "}
+        <Link to="/" className="bouton">
+          Changer de date
+        </Link>
       </h1>
-      <h3>
-       
-      </h3>
-      <form  onSubmit={handleSubmit} >
-        <div className="form_civilite">
+      <h3></h3>
+      <form onSubmit={handleSubmit}>
+        <div className="form_civilite form_group">
           <h2>Vos coordonnées</h2>
-          <Input name="firstname" label="Votre prénom : " defaultValue="Gérard" onChange={handleInputChange}/>
-          <Input name="name" label="Votre nom : " onChange={handleInputChange}/>
-          <Input name="mail" label="Votre email : " onChange={handleInputChange}/>
-          <Input name="telephone" label="Votre téléphone : " onChange={handleInputChange}/>
+          <Input
+            name="prenom"
+            label="Votre prénom : "
+            defaultValue="Gérard"
+            onChange={handleInputChange}
+          />
+          <Input name="nom" label="Votre nom : " onChange={handleInputChange} />
+          <Input
+            name="mail"
+            label="Votre email : "
+            onChange={handleInputChange}
+          />
+          <Input
+            name="telephone"
+            label="Votre téléphone : "
+            onChange={handleInputChange}
+          />
         </div>
-        <div className="form_vehicule">
-        <h2>Votre véhicule</h2>
-          <Input name="marque" label="Marque : " onChange={handleInputChange}/>
-          <Input name="modele" label="Modèle : " onChange={handleInputChange}/>
-          <Input name="immatriculation" label="Immatriculation : " onChange={handleInputChange}/>
+        <div className="form_vehicule form_group">
+          <h2>Votre véhicule</h2>
+          <Input name="marque" label="Marque : " onChange={handleInputChange} />
+          <Input name="modele" label="Modèle : " onChange={handleInputChange} />
+          <Input
+            name="immatriculation"
+            label="Immatriculation : "
+            onChange={handleInputChange}
+          />
         </div>
-        <button  className="bouton"> Reserver</button>
+        <button className="bouton"> Reserver</button>
       </form>
     </div>
   );

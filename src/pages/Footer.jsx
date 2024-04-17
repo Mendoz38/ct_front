@@ -7,7 +7,7 @@ const Home = (props) => {
     return (
         <div className="footer">
                 <div>
-                    <p> AutoSur</p>
+                    <p><Link to="moment"> AutoSur</Link></p>
                 </div>
 
 

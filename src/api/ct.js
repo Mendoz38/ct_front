@@ -24,4 +24,16 @@ export function addRDV(data) {
     })    
 }
 
+export function countRDVByHour(data) {
+    console.log("recherche sur la date :", data[0].date, " et l'heure : ", data[0].heure)
+    return axios.get(config.api_url+'/api/v1/book/check', data[0])
+    .then((res)=>{
+        console.log("Dans api/ct.js check : ", res.data)
+        return res.data
+    })
+    .catch((err)=>{
+        throw err; 
+    })    
+}
+
 export default getAllRDV

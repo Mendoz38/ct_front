@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useState, useEffect }  from "react";
 import {Link} from "react-router-dom"
+import {countRDVByHour, getAllRDV} from "../../api/ct"
+import { now } from "moment";
 
 const Calendar = ({ numDays }) => {
+  const [reservations, setReservations] = useState([]);
+  const creneau = [{
+    date: Date(now),
+    heure: 10
+  }]
+  //console.log ("Creneau", creneau[0])
+  useEffect(()=> {
+    countRDVByHour(creneau)
+    .then((result) => {
+        console.log("zzz", result)
+        setListeRDV(result)
+    })
+    .catch(err=> console.log(err))
+  });
+
+
   // Fonction pour obtenir la date à partir d'aujourd'hui
   const getDate = (offset) => {
     const today = new Date();
@@ -34,6 +52,7 @@ const Calendar = ({ numDays }) => {
   return (
     <div>
       {dates.map((dateObj, index) => (
+        <>
         <div className="containeur_jour" key={index}>
           <div className="jour"> {dateObj.date}</div>
           <div className="bloc_heures">
@@ -45,6 +64,7 @@ const Calendar = ({ numDays }) => {
             ))}
           </div>
         </div>
+        </>
       ))}
     </div>
   );
