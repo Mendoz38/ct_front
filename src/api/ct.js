@@ -24,7 +24,7 @@ export function addRDV(data) {
     })    
 }
 
-export function countRDVByHour(data) {
+export function findByHour(data) {
     console.log("recherche sur la date :", data[0].date, " et l'heure : ", data[0].heure)
     return axios.get(config.api_url+'/api/v1/book/check', data[0])
     .then((res)=>{

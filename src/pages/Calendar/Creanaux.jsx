@@ -1,7 +1,13 @@
-import React from "react";
-import {Link} from "react-router-dom"
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+//import {findByHour} from "../../api/ct.js"
 
 const CreneauHoraire = ({ heures, date }) => {
+  useEffect(() => {
+    //findByHour()
+    //console.log("aaaa")
+  });
+
   return (
     <div className="bloc_heures">
       {heures.map((heure, index) => (

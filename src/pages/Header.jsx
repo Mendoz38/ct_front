@@ -1,18 +1,13 @@
-import { useState } from "react"
-import { Link } from "react-router-dom";
+import React from "react";
 
-const Home =(props) => {
-    
-    return (
-        <>
-        <div className="header">
-            <h1> AutoSur </h1>
-        </div>
-        </>
+const Home = (props) => {
+  return (
+    <>
+      <div className="header">
+        <h1> TruckBuster </h1>
+      </div>
+    </>
+  );
+};
 
-
-    )
-
-}
-
-export default Home
+export default Home;
