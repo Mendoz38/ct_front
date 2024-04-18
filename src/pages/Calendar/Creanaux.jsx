@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-//import {findByHour} from "../../api/ct.js"
+import moment from "moment";
 
 const CreneauHoraire = ({ date, listeRDV }) => {
   // les variables que l'on défini aujourd'hui mais que l'on pourra modifier à la demande du client
@@ -20,8 +20,12 @@ const CreneauHoraire = ({ date, listeRDV }) => {
           (rdv) => rdv.date === date && rdv.heure === creneau.heure
         );
 
-        const dispo = nbrPont - rdvParCreneau.length;
-
+        // Bloquer les créneaux les samedi AM et les dimanches
+        let dispo = nbrPont - rdvParCreneau.length;
+        if(moment(date).day() === 0 || (moment(date).day() === 6 && creneau.heure>12 ) ) {
+            dispo = 0;
+         }
+ 
         // rendre "non cliquable" si il n'y a plus de place (est-ce bien )
         const url =
           dispo === 0 ? "" : `../Reservation/${date}/${creneau.heure}`;
@@ -33,8 +37,8 @@ const CreneauHoraire = ({ date, listeRDV }) => {
           >
             <div className="heure">{creneau.heure}h</div>
             <div className="dispo">
-              <b>{dispo}</b> place{dispo !== 1 ? "s" : ""} disponible
-              {dispo !== 1 ? "s" : ""}
+              <b>{dispo}</b> place{dispo > 1 ? "s" : ""} disponible
+              {dispo > 1 ? "s" : ""} 
             </div>
           </Link>
         );

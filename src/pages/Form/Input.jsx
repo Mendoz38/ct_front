@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ name, placeHolder, label, className, type, value, onChange}) => {
+const Input = ({ name, placeHolder, label, className, type, value, onChange, required}) => {
   return (
     <div className="InputAddOn">
       <span className="InputAddOn-item">{label}</span>
@@ -11,6 +11,7 @@ const Input = ({ name, placeHolder, label, className, type, value, onChange}) =>
         value={value}
         placeholder={placeHolder}
         onChange={onChange}
+        required={required}
       />
     </div>
   );

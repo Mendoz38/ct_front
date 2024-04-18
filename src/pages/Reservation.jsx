@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import moment from "moment";
 import Input from "./Form/Input";
-import { addRDV } from "../api/ct";
+import { addRDV, checkRDV } from "../api/ct";
 
 const Reservation = (props) => {
   const params = useParams();
   moment.locale("fr");
   const date = moment(params.date).format("dddd DD MMMM");
   const [msg, setMsg] = useState(null);
+  const [error, setError] = useState(null);
   const [redirect, setRedirect] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -49,12 +50,23 @@ const Reservation = (props) => {
       },
     ];
     //console.log("Données RDV :", RDV[0]);
-    addRDV(RDV[0]);
-    setMsg("Votre rendez-vous est confirmé, un mail de confirmation vient de vous être envoyé");
-    setTimeout(() => {
-      setRedirect(true);
-    }, 1500);
-  };
+    checkRDV(RDV[0])
+    .then((result)=>{
+        console.log("Tous les RDV : ", result.count);
+        if (result.count >= 2) {
+            setError("Vous avez trop tardé avant de réserver !!!! Essayez un autre créneau")
+        } else {
+            addRDV(RDV[0]);
+            setMsg("Votre rendez-vous est confirmé, un mail de confirmation vient de vous être envoyé");
+            setTimeout(() => {
+              setRedirect(true);
+            }, 1500);
+        }
+    })
+    .catch((error)=>{console.log({error})})
+/*    
+*/
+};
 
   if (redirect) {
     return <Navigate to="/" />;
@@ -87,10 +99,11 @@ const Reservation = (props) => {
             onChange={handleInputChange}
           />
           <Input
-            type="text"
+            type="mail"
             name="mail"
-            label="Votre email : "
+            label="Votre email : *"
             onChange={handleInputChange}
+            required={true} 
           />
           <Input
             type="text"
@@ -128,6 +141,7 @@ const Reservation = (props) => {
         </div>
         <button className="bouton"> Reserver</button>
         <p className="msgOK">{msg}</p>
+        <p className="errorMsg">{error}</p>
       </form>
     </div>
   );

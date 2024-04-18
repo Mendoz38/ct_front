@@ -52,9 +52,6 @@ h2, h3, p {
     text-decoration: none;
 }
 
-.errorMsg {
-    color: red;
-}
 
 .containeur {
     padding: 5px;
@@ -66,7 +63,8 @@ h2, h3, p {
     text-decoration: none;
     border-radius: 5px;
     padding: 15px;
-    width:80%
+    width:80%;
+    cursor: pointer;
 }
 .deposer {
     width: 100%;
@@ -174,7 +172,7 @@ a {
     width:100%;
 
 }
-input[type="text"] {
+input[type="text"], input[type="mail"] {
     all: unset;
     height:30px;
     display: block;
@@ -204,6 +202,29 @@ input[type="text"] {
     border-radius: 5px;
     background-color: aquamarine;
     font-size: 1.2em;
+}
+
+
+.errorMsg {
+    width:80%;
+    margin: 10px auto ;
+    padding:0px;
+    border-radius: 5px;
+    background-color: rgba(225, 29, 72, 1);
+    color:#fff;
+    font-size: 1.2em;
+}
+
+.more_date {
+    width:50%;
+    margin: 10px auto ;
+    padding:10px;
+    border-radius: 5px;
+    background-color: rgba(225, 29, 72, 1);
+    color:#fff;
+    border : 0px;
+    font-size: 1.2em;
+    cursor:pointer;
 }
 
 @media screen and (max-width: 660px) {
