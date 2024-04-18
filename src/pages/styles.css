@@ -141,6 +141,9 @@ a {
     background-color: #ccc;
     opacity: 0.3;
 }
+.dispo1 {
+    background-color: #fff6e5;
+}
 
 .form_civilite, .form_vehicule {
     display: flex;

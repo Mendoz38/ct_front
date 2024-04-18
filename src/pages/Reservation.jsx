@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import moment from "moment";
 import Input from "./Form/Input";
 import { addRDV } from "../api/ct";
 
 const Reservation = (props) => {
   const params = useParams();
+  moment.locale("fr");
+  const date = moment(params.date).format("dddd DD MMMM");
   const [msg, setMsg] = useState(null);
+  const [redirect, setRedirect] = useState(false);
 
   const [formData, setFormData] = useState({
-    date: moment().format("YYYY-MM-DD"),
+    date: params.date,
     heure: params.heure,
     prenom: "",
     nom: "",
@@ -45,17 +48,22 @@ const Reservation = (props) => {
         immatriculation: formData.immatriculation,
       },
     ];
-    console.log("Données RDV :", RDV[0]);
+    //console.log("Données RDV :", RDV[0]);
     addRDV(RDV[0]);
-    setMsg(
-      "Votre rendez-vous est confirmé, un mail de confirmation vient de vous être envoyé"
-    );
+    setMsg("Votre rendez-vous est confirmé, un mail de confirmation vient de vous être envoyé");
+    setTimeout(() => {
+      setRedirect(true);
+    }, 1500);
   };
+
+  if (redirect) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div>
       <h1>
-        Votre réservation pour le {params.date} à {params.heure}h |{" "}
+        Votre réservation pour le {date} à {params.heure}h |{" "}
         <Link to="/" className="bouton">
           Changer de date
         </Link>

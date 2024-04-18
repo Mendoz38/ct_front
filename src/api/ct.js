@@ -4,7 +4,7 @@ import {config} from "../config";
 export function getAllRDV() {
     return axios.get(config.api_url+'/api/v1/book') 
     .then((res)=>{
-        console.log("Dans api/ct.js res : ", res.data)
+        console.log("Dans api/ct.js res : ", res.data[0].date)
         return res.data
     })
     .catch((err)=>{
