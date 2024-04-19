@@ -52,7 +52,7 @@ const Reservation = (props) => {
     //console.log("Données RDV :", RDV[0]);
     checkRDV(RDV[0])
     .then((result)=>{
-        console.log("Tous les RDV : ", result.count);
+        //console.log("Tous les RDV : ", result.count);
         if (result.count >= 2) {
             setError("Vous avez trop tardé avant de réserver !!!! Essayez un autre créneau")
         } else {
@@ -60,12 +60,11 @@ const Reservation = (props) => {
             setMsg("Votre rendez-vous est confirmé, un mail de confirmation vient de vous être envoyé");
             setTimeout(() => {
               setRedirect(true);
-            }, 1500);
+            }, 2500);
         }
     })
     .catch((error)=>{console.log({error})})
-/*    
-*/
+
 };
 
   if (redirect) {
@@ -74,13 +73,11 @@ const Reservation = (props) => {
 
   return (
     <div>
-      <h1>
-        Votre réservation pour le {date} à {params.heure}h |{" "}
-        <Link to="/" className="bouton">
+      <h1>Votre réservation pour le {date} à {params.heure}h </h1>
+      <h3><Link to="/" className="more_date">
           Changer de date
-        </Link>
-      </h1>
-      <h3></h3>
+        </Link></h3>
+        <hr />
       <form onSubmit={handleSubmit}>
         <div className="form_civilite form_group">
           <h2>Vos coordonnées</h2>
@@ -143,6 +140,7 @@ const Reservation = (props) => {
         <p className="msgOK">{msg}</p>
         <p className="errorMsg">{error}</p>
       </form>
+        <hr />
     </div>
   );
 };

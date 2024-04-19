@@ -6,6 +6,8 @@ import Header from './pages/Header'
 import Footer from './pages/Footer'
 import Home from './pages/Home'
 import Reservation from './pages/Reservation';
+import Reverse from './pages/Reverse';
+import Contact from './pages/Contact';
 
 import './pages/styles.css';
 
@@ -15,7 +17,9 @@ function App() {
       <Header />
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/Reservation/:date/:heure" element={<Reservation />} /> 
+        <Route exact path="/Reservation/:date/:heure" element={<Reservation />} />
+        <Route exact path="/Reverse" element={<Reverse />} />
+        <Route exact path="/Contact" element={<Contact />} />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

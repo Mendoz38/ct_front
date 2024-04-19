@@ -28,8 +28,9 @@ h2, h3, p {
     color:#fff;
 }
 
-.header h1 {
+.header a h1 {
     font-size: 30px;
+    color: #fff;
 }
 
 .logo {
@@ -55,6 +56,8 @@ h2, h3, p {
 
 .containeur {
     padding: 5px;
+    max-width: 1000px;
+  margin: 0 auto;
 }
 
 .bouton {
@@ -124,7 +127,7 @@ h2, h3, p {
     width:100%;    
     align-items: center;
     justify-content: space-around;
-    height: 100px;
+    height: 50px;
     border : solid 1px #ccc;
     margin: 3px 0;
     flex-direction: column;
@@ -152,7 +155,7 @@ a {
 }
 .InputAddOn {
     width:80%;
-    padding:10px;
+    padding:5px;
     display: flex;
     align-items: center;
 }
@@ -177,10 +180,8 @@ input[type="text"], input[type="mail"] {
     height:30px;
     display: block;
     width: 100%;
-    height: 34px;
     padding: 6px 12px;
     font-size: 14px;
-    line-height: 1.42857143;
     color: #555;
     background-color: #fff;
     background-image: none;
@@ -194,6 +195,23 @@ input[type="text"], input[type="mail"] {
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
   }
+
+  .btn {
+    margin: 10px auto ;
+    padding:10px;
+    border-radius: 5px;
+    background-color: #19597D;
+    color:#fff;
+    border : 0px;
+    font-size: 1.2em;
+    cursor:pointer;
+}
+
+.calNavigation span {
+    padding : 0 10%;
+    font-weight: 600;
+    font-size:1.5em;;
+}
 
 .msgOK {
     width:80%;
@@ -226,8 +244,14 @@ input[type="text"], input[type="mail"] {
     font-size: 1.2em;
     cursor:pointer;
 }
+hr {
+    margin: 15px 5% 5px 5%;
+}
 
 @media screen and (max-width: 660px) {
+    h1 {
+        font-size:1.3em;
+    }
     .covoit {
         font-size: 1em;
     }
@@ -248,8 +272,9 @@ input[type="text"], input[type="mail"] {
         margin:0;
         text-align: center;
     }
-    input {    
+    input[type="text"], input[type="mail"] {    
         text-align: center;
+        height : 20px;
     }
 
 }
@@ -262,6 +287,57 @@ input[type="text"], input[type="mail"] {
     }
 
     .logo {
+        display: none;
+    }
+}
+
+
+/*   vu reverse */
+
+.table {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .thead {
+    display: flex;
+    font-weight: bold;
+  }
+  
+  .tr {
+    display: flex;
+    width: 100%;
+  }
+  .thead > .tr {
+    height: 55px;
+    background-color: #19597D;
+    color:#fff;
+  }
+  .th {
+    text-transform: uppercase;
+  }
+  .th,
+  .td {
+    display:flex;
+    align-items: center;   
+    justify-content: center;
+    flex:1;
+    padding: 1px;
+  }
+  
+  .th:last-child,
+  .td:last-child {
+    border-right: none;
+  }
+  
+ .hide {display:none;}
+  
+  .heure {
+    font-weight: bold;
+  }
+
+@media screen and (max-width: 660px) {
+    .reverse_dispo {
         display: none;
     }
 }

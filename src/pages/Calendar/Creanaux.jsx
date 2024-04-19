@@ -11,7 +11,7 @@ const CreneauHoraire = ({ date, listeRDV }) => {
     { heure: 14 },
     { heure: 16 },
   ];
-  const nbrPont = 2;
+  const nbrPont = 3;
 
   return (
     <div className="bloc_heures">

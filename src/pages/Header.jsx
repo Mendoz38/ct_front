@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = (props) => {
   return (
     <>
       <div className="header">
-        <h1> TruckBuster </h1>
+        <Link to={"/"} >
+          <h1> TruckBusters </h1>
+        </Link>
       </div>
     </>
   );
