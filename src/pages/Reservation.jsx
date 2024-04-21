@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate  } from "react-router-dom";
 import moment from "moment";
 import Input from "./Form/Input";
 import { addRDV, checkRDV } from "../api/ct";
@@ -67,6 +67,11 @@ const Reservation = (props) => {
 
 };
 
+const navigate = useNavigate();
+const handleClick = () => {
+  navigate(-1);
+};
+
   if (redirect) {
     return <Navigate to="/" />;
   }
@@ -74,9 +79,9 @@ const Reservation = (props) => {
   return (
     <div>
       <h1>Votre réservation pour le {date} à {params.heure}h </h1>
-      <h3><Link to="/" className="more_date">
+      <h3><button onClick={handleClick} className="more_date">
           Changer de date
-        </Link></h3>
+        </button></h3>
         <hr />
       <form onSubmit={handleSubmit}>
         <div className="form_civilite form_group">

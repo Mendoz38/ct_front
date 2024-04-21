@@ -1,5 +1,20 @@
 import {config} from "../config";
 
+export function getConstant() {
+    return fetch(config.api_url+'/api/v1/book/constant')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data;
+        })
+        .catch(error => {
+            throw error;
+        });
+}
 export function getAllRDV() {
     return fetch(config.api_url+'/api/v1/book')
         .then(response => {

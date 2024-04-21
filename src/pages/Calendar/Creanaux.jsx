@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-const CreneauHoraire = ({ date, listeRDV }) => {
-  // les variables que l'on défini aujourd'hui mais que l'on pourra modifier à la demande du client
-  const creneaux = [
-    { heure: 8 },
-    { heure: 10 },
-    { heure: 12 },
-    { heure: 14 },
-    { heure: 16 },
-  ];
-  const nbrPont = 3;
+const CreneauHoraire = ({ date, listeRDV, constant }) => {
+   // définition denos contantes 
+   const start_time = constant.start_time; 
+   const end_time = constant.end_time; 
+   const duration = constant.duration;
+   const nbrPont = constant.pont;
+   
+   // Calculer les heures intermédiaires
+   const creneaux = [];
+   let current_time = start_time;
+   while (current_time < end_time) {
+     creneaux.push({ heure: current_time });
+     current_time += duration;
+   }
 
   return (
     <div className="bloc_heures">
@@ -87,10 +91,10 @@ const dureeCreneau = 2;
 
 // Calculer les heures intermédiaires
 const creneaux = [];
-let heureCourante = heureDebut;
-while (heureCourante < heureFin) {
-  creneaux.push({ heure: heureCourante });
-  heureCourante += dureeCreneau;
+let current_time = heureDebut;
+while (current_time < heureFin) {
+  creneaux.push({ heure: current_time });
+  current_time += dureeCreneau;
 }
 
 */
