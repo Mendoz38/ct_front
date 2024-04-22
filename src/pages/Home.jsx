@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { getConstant, getAllRDV } from "../api/ct";
 import ReverseCreneaux from "./Calendar/ReverseCreneaux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 const Reverse = (props) => {
   const [listeRDV, setListeRDV] = useState([]);
@@ -30,7 +32,7 @@ const Reverse = (props) => {
     getConstant() // Récupérer toutes nos constantes
       .then((result) => {
         setConstant(result[0]);
-        console.log(result[0])
+        //console.log(result[0])
       })
       .catch((err) => console.log(err));
 
@@ -58,17 +60,19 @@ const Reverse = (props) => {
   return (
     <div className="containeur RDV">
       <div className="calNavigation">
-        <button
-          onClick={prevWeeks}
-          className={`btn faChevronRight ${hidePrev === true ? "hide" : ""}`}
-        >
-          {'<'}
-        </button>
+        {hidePrev===true ? <button className="btn black"></button> :
+          <button
+            onClick={prevWeeks}
+            className={`btn faChevronRight ${hidePrev === true ? "hide" : ""}`}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+        }
         <p>
-          <span className="hidden"> Semaine du </span>{moment(currentDate).startOf("week").format("DD MMMM")} au{" "}
+          <span className="hidden-xs"> Semaine du </span>{moment(currentDate).startOf("week").format("DD MMMM")} au{" "}
           {moment(currentDate).endOf("week").format("DD MMMM")}
         </p>
-        <button onClick={nextWeeks} className="btn faChevronRight">{'>'}</button>
+        <button onClick={nextWeeks} className="btn faChevronRight"><FontAwesomeIcon icon={faChevronRight} /></button>
       </div>
       <div className="calendar">
         <div className="cal_lign">

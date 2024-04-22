@@ -1,18 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../img/logo.jpg"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
 const Home = (props) => {
   return (
     <>
       <div className="header">
         <Link to={"/"}>
-          <h1> TruckBusters </h1>
+          <h1> 
+            <span className="hidden">TruckBuster</span>
+             <img src={logo} alt="covoit" className='logo' /> 
+          </h1>
         </Link>
-        <nav>
-          <Link to="/">Accueil</Link>
-          <Link to="/">Prendre Rendez-vous</Link>
-          <Link to="Contact">Contact</Link>
-        </nav>
+
+          <Link to="/"><FontAwesomeIcon icon={faCalendarDays} /> Prendre Rendez-vous</Link>
       </div>
     </>
   );

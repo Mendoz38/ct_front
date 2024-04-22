@@ -9,6 +9,10 @@
     --title: #BFFCF9;
   }
 
+
+.hidden {display:none;}
+
+
 body {
     font-family: calibri ;
     background: var(--background);
@@ -41,6 +45,9 @@ h2, h3, p {
     color:#fff;
 }
 
+.header h1 {
+    margin: 0;
+}
 .header a {
     font-size: 16px;
     color: #fff;
@@ -234,6 +241,10 @@ input[type="text"], input[type="mail"] {
     font-size: 1.2em;
     cursor:pointer;
 }
+    .black {
+        background-color: #000;
+        cursor: default;
+    }
 
 .calNavigation  {
     display:flex;
@@ -241,6 +252,9 @@ input[type="text"], input[type="mail"] {
     padding : 0 10%;
     font-weight: 600;
     font-size:1.2em;
+}
+.w33 {
+    width:33%;
 }
 
 .msgOK {
@@ -272,8 +286,7 @@ hr {
 }
 
 @media screen and (max-width: 660px) {
-    .hidden {display:none;}
-  
+   
     h1 {
         font-size:1.3em;
     }
@@ -298,7 +311,7 @@ hr {
         text-align: center;
         height : 20px;
     }
-    .cal_th > span {
+    .hidden-xs, .cal_th > span {
         display: none;
     }
 
