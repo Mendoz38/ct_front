@@ -41,8 +41,7 @@ const CreneauHoraire = ({ date, listeRDV, constant }) => {
           >
             <div className="heure">{creneau.heure}h</div>
             <div className="dispo">
-              <b>{dispo}</b> place{dispo > 1 ? "s" : ""} disponible
-              {dispo > 1 ? "s" : ""} 
+              <b>{dispo}</b> place{dispo > 1 ? "s" : ""} disponible {dispo > 1 ? "s" : ""} 
             </div>
           </Link>
         );

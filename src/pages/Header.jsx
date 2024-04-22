@@ -5,9 +5,14 @@ const Home = (props) => {
   return (
     <>
       <div className="header">
-        <Link to={"/"} >
+        <Link to={"/"}>
           <h1> TruckBusters </h1>
         </Link>
+        <nav>
+          <Link to="/">Accueil</Link>
+          <Link to="/">Prendre Rendez-vous</Link>
+          <Link to="Contact">Contact</Link>
+        </nav>
       </div>
     </>
   );

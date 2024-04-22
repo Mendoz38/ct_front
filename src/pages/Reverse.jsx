@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import { getConstant, getAllRDV } from "../api/ct";
-import ReverseCreneaux from "./Calendar/ReverseCreneaux";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {getConstant, getAllRDV} from "../api/ct";
+import "moment/locale/fr";
+import CreneauHoraire from "./Calendar/Creanaux";
 
-const Reverse = (props) => {
+const Home = (props) => {
   const [listeRDV, setListeRDV] = useState([]);
-  const [constant, setConstant] = useState([]);
-  const [hidePrev, setHidePrev] = useState(false);
-  const [currentDate, setCurrentDate] = useState(
-    new Date().toISOString().split("T")[0] + "T00:00:00.000Z"
-  ); // Initialisation de currentDate
+  const [constant, setConstant] = useState([])
+  const [numWeeksLoaded, setNumWeeksLoaded] = useState(1); // Nombre de semaine à charger actuellement 1
+  let freeRdvByDay = 10; // RDV dispo par jour (à voir comment le récupérer dynamiquement)
 
   useEffect(() => {
     // Récupérer toutes nos constantes
@@ -24,98 +21,51 @@ const Reverse = (props) => {
     // Récupérer tous les RDV et les mettre sous forme d'un tableau par jour et par creneau
     getAllRDV()
       .then((result) => {
+        //console.log("Tous les RDV : ", result);
         setListeRDV(result);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  const prevWeeks = () => {
-    const today = moment().startOf("week").toISOString(); // Récupération du début de la semaine actuelle
-    if (moment(currentDate).isSame(today, "week")) {
-      // Si la semaine actuelle est la même que la semaine courante, on stoppe et on masque le bouton
-      setHidePrev(true);
-      return;
-    }
-    setCurrentDate(moment(currentDate).subtract(1, "week").toISOString());
+  const loadMoreWeeks = () => {
+    setNumWeeksLoaded(prevNumWeeks => prevNumWeeks + 1);
   };
 
-  const nextWeeks = () => {
-    setCurrentDate(moment(currentDate).add(1, "week").toISOString());
-    setHidePrev(false);
-  };
+  moment.locale("fr");
+  // Je récupère la date au format ISO 8601, je supprime l'heure actuelle que je remplace par T00:00:00.000Z pour avoir pareil que dans ma BDD
+  const currentDate = new Date().toISOString().split("T")[0] + "T00:00:00.000Z";
+  const weekDays = [];
+  // Remplir le tableau avec les jours de la semaine à partir de la date actuelle
+  for (let i = 0; i < constant.show_days * numWeeksLoaded; i++) {
+    const day = moment(currentDate).clone().add(i, "days");
 
-  // définition denos contantes
-  const start_time = constant.start_time;
-  const end_time = constant.end_time;
-  const duration = constant.duration;
-  const nbrPont = constant.pont;
+    // Pour savoir le nombre de RDV par jour, filtre par date et compte le nombre de RDV
+    const rdvForDay = listeRDV.filter((rdv) =>
+      moment(rdv.date).isSame(day, "day")
+    );
 
-  // Calculer les heures intermédiaires
-  const creneaux = [];
-  const nouveauTableau = []; // Pour stocker uniquement les heures
-  let current_time = start_time;
-  while (current_time < end_time) {
-    nouveauTableau.push(current_time); // Ajouter l'heure au nouveau tableau
-    creneaux.push({ heure: current_time }); // Ajouter l'objet complet au tableau original
-    current_time += duration;
+
+  //  if(moment(day).day() === 0  ) {  freeRdvByDay = 0;    }
+    
+    
+    weekDays.push(
+      <div className="containeur_jour" key={i}>
+        <div className="jour">
+          {day.format("dddd DD MMMM")} - {freeRdvByDay - rdvForDay.length} RDV
+          disponibles
+        </div>
+        <CreneauHoraire listeRDV={listeRDV} constant={constant} date={day.toISOString()} />
+      </div>
+    );
   }
 
   return (
     <div className="containeur RDV">
-      <div className="calNavigation">
-        <button
-          onClick={prevWeeks}
-          className={`btn faChevronRight ${hidePrev === true ? "hide" : ""}`}
-        >
-          Précédent
-        </button>
-        <span>
-          Semaine du {moment(currentDate).startOf("week").format("DD MMMM")} au{" "}
-          {moment(currentDate).endOf("week").format("DD MMMM")}
-        </span>
-        <button onClick={nextWeeks} className="btn faChevronRight">
-          Suivant
-        </button>
-      </div>
-      <div className="table">
-        <div className="thead">
-          <div className="tr">
-            <div className="th">
-              Jour /<br /> Heure
-            </div>
-            {Array.from({ length: constant.show_days }).map((_, index) => (
-              <div className="th" key={index}>
-                {moment(currentDate).clone().add(index, "days").format("dddd ")}
-                <br />
-                {moment(currentDate).clone().add(index, "days").format(" DD")}
-                <br />
-                {moment(currentDate).clone().add(index, "days").format(" MMMM")}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="tbody">
-          {creneaux.map((creneau, index) => (
-            <div className="tr" key={index}>
-              <div className="td heure">{creneau.heure}h</div>
-              {Array.from({ length: constant.show_days }).map((_, jIndex) => (
-                <div className="td" key={jIndex}>
-                  <ReverseCreneaux
-                    listeRDV={listeRDV}
-                    date={moment(currentDate)
-                      .clone()
-                      .add(jIndex, "days")
-                      .toISOString()}
-                    heure={creneau.heure} // Utilisez l'heure du créneau actuel
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      <h2> Prendre un rendez-vous </h2>
+      <section>{weekDays}</section>
+      <button onClick={loadMoreWeeks} className="more_date">Voir plus de dates</button>
     </div>
   );
 };
 
-export default Reverse;
+export default Home;

@@ -1,7 +1,18 @@
 @import-normalize;
 
+:root {
+    --background: #000;
+    --fontColor: #ffffff;
+    --button: #FB4F93;
+    --table: #FFF4F9;
+    --tableFont: #000;
+    --title: #BFFCF9;
+  }
+
 body {
     font-family: calibri ;
+    background: var(--background);
+    color: var(--fontColor)
 }
 h2, h3, p {
     margin: 5px 0;
@@ -9,7 +20,8 @@ h2, h3, p {
 .autosur {
     width: 100%;
     text-align: center;
-    background-color: #fff;
+    background-color: var(--background);
+    margin-bottom:40px;
 }
 
 .flex-50 {
@@ -23,16 +35,32 @@ h2, h3, p {
 .header {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-around;
-    background-color: #19597D;
+    background-color: var(--background);
     color:#fff;
 }
 
-.header a h1 {
-    font-size: 30px;
+.header a {
+    font-size: 16px;
     color: #fff;
 }
-
+.header > nav {
+    display:flex;  
+    justify-content: space-evenly; 
+    width: 100%;
+}
+.header > nav a {
+    font-size: 1.3em;
+    padding:10px;
+    border-radius: 5px;
+}
+.header > nav a:hover {
+    background-color: var(--button);
+}
+.header > nav > a{
+    display:flex;
+}
 .logo {
     height: 80px;
 }
@@ -41,8 +69,7 @@ h2, h3, p {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    background: #19597D;
-    color: #fff;
+    background: var(--background);
     position: fixed;
     bottom: 0;
     width: 100%
@@ -61,7 +88,7 @@ h2, h3, p {
 }
 
 .bouton {
-    background-color: #19597D;
+    background-color: var(--button);
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -74,16 +101,7 @@ h2, h3, p {
     text-decoration: none;
 }
 
-.round_icon {
-    border: 1px solid #000;
-    background-color: #fff;
-    color: #000;
-    padding: 10px;
-    padding-left: 10px;
-    border-radius: 50px;
-    padding-top: 5px;
-    padding-left: 7px;
-}
+
 .message {
     background: white;
     padding: .5rem;
@@ -104,7 +122,7 @@ h2, h3, p {
     display: flex;
     width: 100%;
     justify-content: center;
-    background-color: #19597D;
+    background-color: var(--table);
     color:#fff;
     font-weight: 600;
     text-transform: uppercase;
@@ -112,6 +130,10 @@ h2, h3, p {
 }
 .heure {
     font-size: 1.5em;
+}
+.icon {
+    font-size: 1.5em;
+    font-weight: 900;
 }
 .dispo {
     font-size: 1em;
@@ -127,8 +149,7 @@ h2, h3, p {
     width:100%;    
     align-items: center;
     justify-content: space-around;
-    height: 50px;
-    border : solid 1px #ccc;
+    height: 48px;
     margin: 3px 0;
     flex-direction: column;
     background-color: rgb(241, 255, 241);
@@ -137,13 +158,20 @@ a {
     text-decoration: none;
     color:#000;
 }
-.Complet {
+.Ferme {
     cursor: default;
     background-color: #ccc;
-    opacity: 0.3;
+    color:#555;
 }
-.dispo1 {
+.Complet {
+    cursor: default;
+    background-color: #FFCCCC;
+    opacity: 1;
+    color:red;
+}
+.dispo {
     background-color: #fff6e5;
+    color: green;
 }
 
 .form_civilite, .form_vehicule {
@@ -180,7 +208,7 @@ input[type="text"], input[type="mail"] {
     height:30px;
     display: block;
     width: 100%;
-    padding: 6px 12px;
+    padding: 3px 12px;
     font-size: 14px;
     color: #555;
     background-color: #fff;
@@ -200,17 +228,19 @@ input[type="text"], input[type="mail"] {
     margin: 10px auto ;
     padding:10px;
     border-radius: 5px;
-    background-color: #19597D;
+    background-color: var(--button);
     color:#fff;
     border : 0px;
     font-size: 1.2em;
     cursor:pointer;
 }
 
-.calNavigation span {
+.calNavigation  {
+    display:flex;
+    align-items: center;
     padding : 0 10%;
     font-weight: 600;
-    font-size:1.5em;;
+    font-size:1.2em;
 }
 
 .msgOK {
@@ -220,6 +250,7 @@ input[type="text"], input[type="mail"] {
     border-radius: 5px;
     background-color: aquamarine;
     font-size: 1.2em;
+    color:#000;
 }
 
 
@@ -235,20 +266,14 @@ input[type="text"], input[type="mail"] {
 
 .more_date {
     width:50%;
-    margin: 10px auto ;
-    padding:10px;
-    border-radius: 5px;
-    background-color: rgba(225, 29, 72, 1);
-    color:#fff;
-    border : 0px;
-    font-size: 1.2em;
-    cursor:pointer;
 }
 hr {
     margin: 15px 5% 5px 5%;
 }
 
 @media screen and (max-width: 660px) {
+    .hidden {display:none;}
+  
     h1 {
         font-size:1.3em;
     }
@@ -258,9 +283,6 @@ hr {
     .bloc_heures{
         flex-direction: column;
     }
-    .creneau{
-        height: 60px;
-    }   
     .heure {
         font-size: 1.2em;
     }
@@ -275,6 +297,9 @@ hr {
     input[type="text"], input[type="mail"] {    
         text-align: center;
         height : 20px;
+    }
+    .cal_th > span {
+        display: none;
     }
 
 }
@@ -294,45 +319,42 @@ hr {
 
 /*   vu reverse */
 
-.table {
+.calendar {
     display: flex;
     flex-direction: column;
   }
   
-  .thead {
-    display: flex;
-    font-weight: bold;
-  }
-  
-  .tr {
+  .cal_lign {
     display: flex;
     width: 100%;
+    font-weight: bold;
+    height: 50px;
+    background-color: var(--table);
+    color:var(--tableFont);
   }
-  .thead > .tr {
-    height: 55px;
-    background-color: #19597D;
-    color:#fff;
-  }
-  .th {
-    text-transform: uppercase;
-  }
-  .th,
-  .td {
+  .cal_lign_header {
     display:flex;
     align-items: center;   
     justify-content: center;
     flex:1;
-    padding: 1px;
+    padding: 0px;
+    text-transform: uppercase;
+    border: 1px solid #000;
   }
   
-  .th:last-child,
-  .td:last-child {
-    border-right: none;
+  .cal_day {
+    display:flex;
+    align-items: center;   
+    justify-content: center;
+    flex:1;
+    padding: 0px;
+    text-transform: uppercase;
+    border: 1px solid #000;
   }
   
  .hide {display:none;}
   
-  .heure {
+ .heure {
     font-weight: bold;
   }
 

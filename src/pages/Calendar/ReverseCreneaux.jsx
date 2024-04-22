@@ -1,15 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const ReverseCreneaux = ({ date, heure, listeRDV }) => {
+const ReverseCreneaux = ({ date, heure, listeRDV, constant }) => {
   const rdvParCreneau = listeRDV.filter(
     (rdv) => rdv.date === date && rdv.heure === heure
   );
 
-  let dispo = 2 - rdvParCreneau.length;
-  if (moment(date).day() === 0 || (moment(date).day() === 6 && heure > 12)) {
-    dispo = 0;
+  let dispo = constant.pont - rdvParCreneau.length;
+  if (
+    (moment(date).day() === 0) // 0 = numéro du jour pour dimanche
+    || 
+    (moment(date).day() === 6 && heure > constant.saturday_end-0.1) // 6 = samedi / -0.1 car si saturday_end = 12 par ex, il faut que ce soit fermé à 12 et que ca n'ouvre pas le créneau de 12h
+  ) {
+    dispo = -1;
   }
 
   const url = dispo === 0 ? "" : `../Reservation/${date}/${heure}`;
@@ -17,10 +23,19 @@ const ReverseCreneaux = ({ date, heure, listeRDV }) => {
   return (
     <Link
       to={`${url} `}
-      className={`creneau ${dispo === 0 ? "Complet" : ""} dispo${dispo}`}
+      title={`${dispo >= 1 && (`${dispo} place${dispo > 1 ? "s" : ""} disponible${dispo > 1 ? "s" : ""}`) }`}
+      className={`creneau 
+        ${dispo === 0 && "Complet"}  
+        ${dispo === -1 && "Ferme" } 
+        ${dispo >= 1 && "Dispo" } 
+        `
+      }
     >
-      <div className="heure"><b>{dispo}</b> </div>
-      <div className="reverse_dispo">disponibilité{`${dispo > 1 ? "s" : ""}`}</div>
+      <div className="icon">
+        {dispo === -1 && <FontAwesomeIcon icon={faXmark} /> }
+        {dispo === 0 && <FontAwesomeIcon icon={faXmark} /> }
+        {dispo >= 1 && <FontAwesomeIcon icon={faCheck} /> }
+      </div>
     </Link>
   );
 };

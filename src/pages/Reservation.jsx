@@ -73,79 +73,86 @@ const handleClick = () => {
 };
 
   if (redirect) {
-    return <Navigate to="/" />;
+   // return <Navigate to="/" />;
   }
 
   return (
     <div>
-      <h1>Votre réservation pour le {date} à {params.heure}h </h1>
-      <h3><button onClick={handleClick} className="more_date">
-          Changer de date
-        </button></h3>
-        <hr />
-      <form onSubmit={handleSubmit}>
-        <div className="form_civilite form_group">
-          <h2>Vos coordonnées</h2>
+        <h1>Votre réservation pour le {date} à {params.heure}h </h1>
+      {msg || error ? 
+        <div>
+          <p className="msgOK">{msg}</p>
+          <p className="errorMsg">{error}</p>
 
-          <Input
-            type="text"
-            name="prenom"
-            label="Votre prénom : "
-            defaultValue="Gérard"
-            onChange={handleInputChange}
-          />
-          <Input
-            type="text"
-            name="nom"
-            label="Votre nom : "
-            onChange={handleInputChange}
-          />
-          <Input
-            type="mail"
-            name="mail"
-            label="Votre email : *"
-            onChange={handleInputChange}
-            required={true} 
-          />
-          <Input
-            type="text"
-            name="telephone"
-            label="Votre téléphone : "
-            onChange={handleInputChange}
-          />
-          <Input
-            type="text"
-            name="compagnie"
-            label="Votre entreprise : "
-            onChange={handleInputChange}
-          />
+
         </div>
-        <div className="form_vehicule form_group">
-          <h2>Votre véhicule</h2>
-          <Input
-            type="text"
-            name="marque"
-            label="Marque : "
-            onChange={handleInputChange}
-          />
-          <Input
-            type="text"
-            name="modele"
-            label="Modèle : "
-            onChange={handleInputChange}
-          />
-          <Input
-            type="text"
-            name="immatriculation"
-            label="Immatriculation : "
-            onChange={handleInputChange}
-          />
-        </div>
-        <button className="bouton"> Reserver</button>
-        <p className="msgOK">{msg}</p>
-        <p className="errorMsg">{error}</p>
-      </form>
+      : 
+      <div>
+        <button onClick={handleClick} className="btn">Changer de date</button>
         <hr />
+        <form onSubmit={handleSubmit}>
+          <div className="form_civilite form_group">
+            <h2>Vos coordonnées</h2>
+
+            <Input
+              type="text"
+              name="prenom"
+              label="Votre prénom : "
+              onChange={handleInputChange}
+            />
+            <Input
+              type="text"
+              name="nom"
+              label="Votre nom : "
+              onChange={handleInputChange}
+            />
+            <Input
+              type="mail"
+              name="mail"
+              label="Votre email : *"
+              onChange={handleInputChange}
+              required={true} 
+            />
+            <Input
+              type="text"
+              name="telephone"
+              label="Votre téléphone : "
+              onChange={handleInputChange}
+            />
+            <Input
+              type="text"
+              name="compagnie"
+              label="Votre entreprise : "
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form_vehicule form_group">
+            <h2>Votre véhicule</h2>
+            <Input
+              type="text"
+              name="marque"
+              label="Marque : "
+              onChange={handleInputChange}
+            />
+            <Input
+              type="text"
+              name="modele"
+              label="Modèle : "
+              onChange={handleInputChange}
+            />
+            <Input
+              type="text"
+              name="immatriculation"
+              label="Immatriculation : "
+              onChange={handleInputChange}
+            />
+          </div>
+          <button className="btn"> Reserver</button>
+
+        </form>
+          <hr />
+      </div>
+      }
     </div>
   );
 };
