@@ -371,8 +371,22 @@ hr {
     font-weight: bold;
   }
 
+  .calendar-icon {
+    margin-left:15px;
+    cursor:pointer;
+}
+
 @media screen and (max-width: 660px) {
     .reverse_dispo {
         display: none;
     }
+}
+
+
+input[type="date"] {
+    font-size:16px;
+    margin:0 0 0 15px;;
+}
+input[type="date"]::-webkit-datetime-edit {
+    display:none;
 }

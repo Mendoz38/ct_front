@@ -7,20 +7,24 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 
 const Reverse = (props) => {
   const [listeRDV, setListeRDV] = useState([]);
-  const [constant, setConstant] = useState([]);
   const [hidePrev, setHidePrev] = useState(false);
   const [currentDate, setCurrentDate] = useState( new Date().toISOString().split("T")[0] + "T00:00:00.000Z" );
+  const endOfWeek = moment(currentDate).add(7, 'days').toISOString();
 
   const windowWidth = window.innerWidth; // récupère la largeur de l'écran / Attention nécessite un F5 pour voir le rendu
   const daysFormat = windowWidth <= 768 ? "dd" : "dddd";
+
+  // Méthode statique pour déclarer les heures d'ouverture et la durée des créneau, difficilement maintenable
+  //const creneaux = [8, 10, 12, 14, 16];
+
+  // Méthode dynamique avec appel BDD
+  const [constant, setConstant] = useState([]);
+  const creneaux = [];
+  const nouveauTableau = []; // Pour stocker uniquement les heures
   // définition de nos contantes métier
   const start_time = constant.start_time;
   const end_time = constant.end_time;
   const duration = constant.duration;
-
-  // Calculer les heures intermédiaires
-  const creneaux = [];
-  const nouveauTableau = []; // Pour stocker uniquement les heures
   let current_time = start_time;
   while (current_time < end_time) {
     nouveauTableau.push(current_time); // Ajouter l'heure au nouveau tableau
@@ -57,6 +61,10 @@ const Reverse = (props) => {
     setHidePrev(false);
   };
 
+  const handleDateChange = (event) => {
+    setCurrentDate(event.target.value);
+  };
+
   return (
     <div className="containeur RDV">
       <div className="calNavigation">
@@ -68,10 +76,10 @@ const Reverse = (props) => {
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
         }
-        <p>
-          <span className="hidden-xs"> Semaine du </span>{moment(currentDate).startOf("week").format("DD MMMM")} au{" "}
-          {moment(currentDate).endOf("week").format("DD MMMM")}
-        </p>
+         <p>
+      <span className="hidden-xs"> Du </span>
+      {moment(currentDate).format('DD MMMM')} au {moment(endOfWeek).format('DD MMMM YYYY')}
+    </p>
         <button onClick={nextWeeks} className="btn faChevronRight"><FontAwesomeIcon icon={faChevronRight} /></button>
       </div>
       <div className="calendar">

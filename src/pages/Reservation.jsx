@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, Navigate, useNavigate  } from "react-router-dom";
+import { useParams, useNavigate  } from "react-router-dom";
 import moment from "moment";
 import Input from "./Form/Input";
 import { addRDV, checkRDV } from "../api/ct";
