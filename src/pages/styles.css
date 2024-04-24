@@ -401,5 +401,5 @@ input[type="date"]::-webkit-datetime-edit {
 .yup_message {
     padding : 0 10px;
     font-weight: 900;
-    color:rgba(225, 29, 72, 1)
+    color:var(--button)
 }

@@ -89,10 +89,14 @@ const Reservation = (props) => {
         Votre réservation pour le {date} à {params.heure}h{" "}
       </h2>
       {msg || error ? (
+        <>
         <div className={`${msg && "msgOK"} ${error && "errorMsg"} response`}>
           <p>{msg}</p>
           <p>{error}</p>
         </div>
+        
+        <h2 className="margin40">Toute l'équipe de TruckBuster vous remercie pour votre confiance</h2>
+        </>
       ) : (
         <div>
           <button onClick={handleClick} className="btn">
