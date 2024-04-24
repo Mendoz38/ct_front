@@ -9,7 +9,7 @@ const Reverse = (props) => {
   const [listeRDV, setListeRDV] = useState([]);
   const [hidePrev, setHidePrev] = useState(false);
   const [currentDate, setCurrentDate] = useState( new Date().toISOString().split("T")[0] + "T00:00:00.000Z" );
-  const endOfWeek = moment(currentDate).add(7, 'days').toISOString();
+  const endOfWeek = moment(currentDate).add(6, 'days').toISOString();
 
   const windowWidth = window.innerWidth; // récupère la largeur de l'écran / Attention nécessite un F5 pour voir le rendu
   const daysFormat = windowWidth <= 768 ? "dd" : "dddd";
@@ -36,7 +36,7 @@ const Reverse = (props) => {
     getConstant() // Récupérer toutes nos constantes
       .then((result) => {
         setConstant(result[0]);
-        //console.log(result[0])
+        console.log(result[0])
       })
       .catch((err) => console.log(err));
 
@@ -67,6 +67,7 @@ const Reverse = (props) => {
 
   return (
     <div className="containeur RDV">
+      <h2>Selectionnez votre date pour prendre un rendez-vous</h2>
       <div className="calNavigation">
         {hidePrev===true ? <button className="btn black"></button> :
           <button
@@ -79,6 +80,7 @@ const Reverse = (props) => {
          <p>
       <span className="hidden-xs"> Du </span>
       {moment(currentDate).format('DD MMMM')} au {moment(endOfWeek).format('DD MMMM YYYY')}
+      <input type="date" id="date"  value={currentDate} onChange={handleDateChange} min={moment().format("YYYY-MM-DD")}/>
     </p>
         <button onClick={nextWeeks} className="btn faChevronRight"><FontAwesomeIcon icon={faChevronRight} /></button>
       </div>
@@ -110,7 +112,7 @@ const Reverse = (props) => {
                     .clone()
                     .add(jIndex, "days")
                     .toISOString()}
-                  heure={creneau.heure} // Utilisez l'heure du créneau actuel
+                  heure={creneau.heure}
                 />
               </div>
             ))}

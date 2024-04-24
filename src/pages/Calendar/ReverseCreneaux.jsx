@@ -13,7 +13,7 @@ const ReverseCreneaux = ({ date, heure, listeRDV, constant }) => {
   if (
     (moment(date).day() === 0) // 0 = numéro du jour pour dimanche
     || 
-    (moment(date).day() === 6 && heure > constant.saturday_end-0.1) // 6 = samedi / -0.1 car si saturday_end = 12 par ex, il faut que ce soit fermé à 12 et que ca n'ouvre pas le créneau de 12h
+    (moment(date).day() === 6 && heure >= constant.saturday_end) // 6 = samedi / 
   ) {
     dispo = -1;
   }

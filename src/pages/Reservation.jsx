@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import { useParams, useNavigate  } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import Input from "./Form/Input";
 import { addRDV, checkRDV } from "../api/ct";
 
@@ -10,149 +13,166 @@ const Reservation = (props) => {
   const date = moment(params.date).format("dddd DD MMMM");
   const [msg, setMsg] = useState(null);
   const [error, setError] = useState(null);
-  const [redirect, setRedirect] = useState(false);
 
-  const [formData, setFormData] = useState({
-    date: params.date,
-    heure: params.heure,
-    prenom: "",
-    nom: "",
-    mail: "",
-    telephone: "",
-    compagnie: "",
-    marque: "",
-    modele: "",
-    immatriculation: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(-1);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const RDV = [
-      {
-        date: formData.date,
-        heure: formData.heure,
-        prenom: formData.prenom,
-        nom: formData.nom,
-        mail: formData.mail,
-        telephone: formData.telephone,
-        compagnie: formData.compagnie,
-        marque: formData.marque,
-        modele: formData.modele,
-        immatriculation: formData.immatriculation,
-      },
-    ];
-    //console.log("Données RDV :", RDV[0]);
-    checkRDV(RDV[0])
-    .then((result)=>{
+  /* ------------------- YUP --------------------------*/
+  const schema = yup
+    .object({
+      prenom: yup.string().required(" Prénom obligatoire "),
+      nom: yup.string().required(" Nom obligatoire "),
+      driver: yup.string().required(" Nom du chauffeur obligatoire "),
+      telephone: yup.string()
+      .matches(/^(\s*\d\s*){10}$/, 'Numéro invalide')
+      .required('Numéro de téléphone obligatoire'),
+      mail: yup.string()
+        .email('Adresse email invalide')
+        .required('Adresse email obligatoire'),
+      compagnie: yup.string().required("Entreprise obligatoire").max(20, "20 caractères max"),
+      immatriculation: yup
+          .string()
+          .required("Immatriculation obligatoire")
+          .matches(
+            /^[A-Za-z]{2}-\d{3}-[A-Za-z]{2}$/,
+            "Le format doit être AX-612-KA"
+          ),
+    })
+    .required();
+
+  /* ------------------- REACT HOOK FORM --------------------------*/
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  /* ------------------- OnSubmit form --------------------------*/
+  const onSubmit = (data) => {
+    // je rajoute la date et l'heure dans mes données du formulaire
+    data = {
+      ...data,
+      date: params.date,
+      heure: params.heure,
+    };
+
+    console.log("Data :", data);
+    checkRDV(data)
+      .then((result) => {
         //console.log("Tous les RDV : ", result.count);
         if (result.count >= 2) {
-            setError("Vous avez trop tardé avant de réserver !!!! Essayez un autre créneau")
+          setError(
+            "Vous avez trop tardé avant de réserver !!!! Essayez un autre créneau"
+          );
         } else {
-            addRDV(RDV[0]);
-            setMsg("Votre rendez-vous est confirmé, un mail de confirmation vient de vous être envoyé");
-            setTimeout(() => {
-              setRedirect(true);
-            }, 2500);
+          addRDV(data);
+          setMsg(
+            "Votre rendez-vous est confirmé, un mail de confirmation vient de vous être envoyé"
+          );
         }
-    })
-    .catch((error)=>{console.log({error})})
-
-};
-
-const navigate = useNavigate();
-const handleClick = () => {
-  navigate(-1);
-};
-
-  if (redirect) {
-   // return <Navigate to="/" />;
-  }
+      })
+      .catch((error) => {
+        console.log({ error });
+      });
+  };
 
   return (
     <div>
-        <h1>Votre réservation pour le {date} à {params.heure}h </h1>
-      {msg || error ? 
-        <div>
-          <p className="msgOK">{msg}</p>
-          <p className="errorMsg">{error}</p>
-
-
+      <h1>TruckBuster </h1>
+      <hr className="margin40" />
+      <h2>
+        Votre réservation pour le {date} à {params.heure}h{" "}
+      </h2>
+      {msg || error ? (
+        <div className={`${msg && "msgOK"} ${error && "errorMsg"} response`}>
+          <p>{msg}</p>
+          <p>{error}</p>
         </div>
-      : 
-      <div>
-        <button onClick={handleClick} className="btn">Changer de date</button>
-        <hr />
-        <form onSubmit={handleSubmit}>
-          <div className="form_civilite form_group">
-            <h2>Vos coordonnées</h2>
-
-            <Input
-              type="text"
-              name="prenom"
-              label="Votre prénom : "
-              onChange={handleInputChange}
-            />
-            <Input
-              type="text"
-              name="nom"
-              label="Votre nom : "
-              onChange={handleInputChange}
-            />
-            <Input
-              type="mail"
-              name="mail"
-              label="Votre email : *"
-              onChange={handleInputChange}
-              required={true} 
-            />
-            <Input
-              type="text"
-              name="telephone"
-              label="Votre téléphone : "
-              onChange={handleInputChange}
-            />
-            <Input
-              type="text"
-              name="compagnie"
-              label="Votre entreprise : "
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form_vehicule form_group">
-            <h2>Votre véhicule</h2>
-            <Input
-              type="text"
-              name="marque"
-              label="Marque : "
-              onChange={handleInputChange}
-            />
-            <Input
-              type="text"
-              name="modele"
-              label="Modèle : "
-              onChange={handleInputChange}
-            />
-            <Input
-              type="text"
-              name="immatriculation"
-              label="Immatriculation : "
-              onChange={handleInputChange}
-            />
-          </div>
-          <button className="btn"> Reserver</button>
-
-        </form>
+      ) : (
+        <div>
+          <button onClick={handleClick} className="btn">
+            Changer de date
+          </button>
           <hr />
-      </div>
-      }
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form_civilite form_group">
+              <h2>Vos coordonnées</h2>
+
+              <Input
+                type="text"
+                name="prenom"
+                label="Votre prénom : "
+                register={register}
+                error={errors.prenom ? errors.prenom.message : null}
+              />
+              <Input
+                type="text"
+                name="nom"
+                label="Votre nom : "
+                register={register}
+                error={errors.nom ? errors.nom.message : null}
+              />
+              <Input
+                type="mail"
+                name="mail"
+                label="Votre email : *"
+                register={register}
+                error={errors.mail ? errors.mail.message : null}
+              />
+              <Input
+                type="text"
+                name="telephone"
+                label="Votre téléphone : "
+                register={register}
+                error={errors.telephone ? errors.telephone.message : null}
+              />
+              <Input
+                type="text"
+                name="compagnie"
+                label="Votre entreprise : "
+                register={register}
+                error={errors.compagnie ? errors.compagnie.message : null}
+              />
+              <Input
+                type="text"
+                name="driver"
+                label="Nom du chauffeur : "
+                register={register}
+                error={errors.driver ? errors.driver.message : null}
+              />
+            </div>
+            <div className="form_vehicule form_group">
+              <h2>Votre véhicule</h2>
+              <Input
+                type="text"
+                name="marque"
+                label="Marque : "
+                register={register}
+              />
+              <Input
+                type="text"
+                name="modele"
+                label="Modèle : "
+                register={register}
+              />
+              <Input
+                type="text"
+                name="immatriculation"
+                label="Immatriculation : "
+                register={register}
+                error={errors.immatriculation ? errors.immatriculation.message : null}
+              />
+            </div>
+            <button type="submit" className="btn"> Reserver </button>
+          </form>
+          <hr />
+        </div>
+      )}
     </div>
   );
 };
