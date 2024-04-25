@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 const Reverse = (props) => {
+  moment.locale("fr");
   const [listeRDV, setListeRDV] = useState([]);
   const [hidePrev, setHidePrev] = useState(false);
   const [currentDate, setCurrentDate] = useState( new Date().toISOString().split("T")[0] + "T00:00:00.000Z" );
@@ -36,7 +37,7 @@ const Reverse = (props) => {
     getConstant() // Récupérer toutes nos constantes
       .then((result) => {
         setConstant(result[0]);
-        console.log(result[0])
+        //console.log(result[0])
       })
       .catch((err) => console.log(err));
 
