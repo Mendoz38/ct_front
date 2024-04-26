@@ -9,7 +9,7 @@ const Home = (props) => {
     <div className="footer">
 
           <Link to="tel:0123456789"> <FontAwesomeIcon icon={faPhone} /> 01 23 45 67 89</Link>
-          <Link to="/">2024 - TruckBuster - v1.2</Link>
+          <Link to="/">2024 - TruckBuster - v1.3</Link>
           <Link to="Contact"> <FontAwesomeIcon icon={faAt} /> Contact</Link>
     </div>
   );
