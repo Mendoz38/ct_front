@@ -83,8 +83,8 @@ const Reservation = (props) => {
 
   return (
     <div>
-      <h1>TruckBuster </h1>
-      <hr className="margin40" />
+      <h1 className="hidden-xs">TruckBuster </h1>
+      <hr className="margin40 hidden-xs" />
       <h2>
         Votre réservation pour le {date} à {params.heure}h{" "}
       </h2>

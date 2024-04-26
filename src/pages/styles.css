@@ -299,6 +299,10 @@ hr {
     h1 {
         font-size:1.3em;
     }
+    h2 {
+        font-size:1.2em;
+        margin : 1%;
+    }
     .covoit {
         font-size: 1em;
     }
