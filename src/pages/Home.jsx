@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
+import "moment/locale/fr";
 import { getConstant, getAllRDV } from "../api/ct";
 import ReverseCreneaux from "./Calendar/ReverseCreneaux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Reverse = (props) => {
   moment.locale("fr");
   const [listeRDV, setListeRDV] = useState([]);
   const [hidePrev, setHidePrev] = useState(false);
-  const [currentDate, setCurrentDate] = useState( new Date().toISOString().split("T")[0] + "T00:00:00.000Z" );
-  const endOfWeek = moment(currentDate).add(6, 'days').toISOString();
+  const [currentDate, setCurrentDate] = useState(
+    new Date().toISOString().split("T")[0] + "T00:00:00.000Z"
+  );
+  const endOfWeek = moment(currentDate).add(6, "days").toISOString();
 
   const windowWidth = window.innerWidth; // récupère la largeur de l'écran / Attention nécessite un F5 pour voir le rendu
   const daysFormat = windowWidth <= 768 ? "dd" : "dddd";
@@ -63,32 +69,45 @@ const Reverse = (props) => {
   };
 
   const handleDateChange = (event) => {
-    setCurrentDate(event.target.value);
+    setCurrentDate(event.target.value+ "T00:00:00.000Z"); // Important, rajouter l'heure pour pouvoir checker les RDV
   };
 
   return (
     <div className="containeur RDV">
       <h2>Selectionnez votre date pour prendre un rendez-vous</h2>
       <div className="calNavigation">
-        {hidePrev===true ? <button className="btn black"></button> :
+        {hidePrev === true ? (
+          <button className="btn black"></button>
+        ) : (
           <button
             onClick={prevWeeks}
             className={`btn faChevronRight ${hidePrev === true ? "hide" : ""}`}
           >
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
-        }
-         <p>
-      <span className="hidden-xs"> Du </span>
-      {moment(currentDate).format('DD MMMM')} au {moment(endOfWeek).format('DD MMMM YYYY')}
-      <input type="date" id="date"  value={currentDate} onChange={handleDateChange} min={moment().format("YYYY-MM-DD")}/>
-    </p>
-        <button onClick={nextWeeks} className="btn faChevronRight"><FontAwesomeIcon icon={faChevronRight} /></button>
+        )}
+        <p>
+          <span className="hidden-xs"> Du </span>
+          {moment(currentDate).format("DD MMMM")} au{" "}
+          {moment(endOfWeek).format("DD MMMM YYYY")}
+          <input
+            type="date"
+            id="date"
+            value={currentDate}
+            onChange={handleDateChange}
+            min={moment().format("YYYY-MM-DD")}
+          />
+        </p>
+        <button onClick={nextWeeks} className="btn faChevronRight">
+          <FontAwesomeIcon icon={faChevronRight} />
+        </button>
       </div>
       <div className="calendar">
         <div className="cal_lign">
           <div className="cal_lign_header">
-            <span>Jour /<br /> Heure</span>
+            <span>
+              Jour /<br /> Heure
+            </span>
           </div>
           {Array.from({ length: constant.show_days }).map((_, index) => (
             <div className="cal_lign_header" key={index}>
