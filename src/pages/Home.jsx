@@ -66,7 +66,7 @@ const Reverse = (props) => {
   const nextWeeks = () => {
     setCurrentDate(moment(currentDate).add(1, "week").toISOString());
     setHidePrev(false);
-  };
+  }; 
 
   const handleDateChange = (event) => {
     setCurrentDate(event.target.value+ "T00:00:00.000Z"); // Important, rajouter l'heure pour pouvoir checker les RDV

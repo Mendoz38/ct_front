@@ -94,7 +94,7 @@ const Reservation = (props) => {
           <p>{msg}</p>
           <p>{error}</p>
         </div>
-        
+         
         <h2 className="margin40">Toute l'équipe de TruckBuster vous remercie pour votre confiance</h2>
         </>
       ) : (
